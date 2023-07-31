@@ -25,3 +25,7 @@ services:
             - FLASK_ENV=development
         depends_on:
             - db
+
+networks:
+    cz_biohub_network:
+        driver: bridge
