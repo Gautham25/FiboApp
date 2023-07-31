@@ -26,3 +26,6 @@ def home():
     Test API to check if backend is functional
     """
     return "Hello World"
+
+if __name__ == '__main__':
+    app.run()

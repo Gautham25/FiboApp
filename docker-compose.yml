@@ -10,3 +10,18 @@ services:
         networks:
             - cz_biohub_network
         restart: always
+
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        volumes:
+            - "./backend:/usr/src/backend"
+        networks:
+            - cz_biohub_network
+        ports:
+            - 5000:5000
+        environment:
+            - FLASK_ENV=development
+        depends_on:
+            - db
