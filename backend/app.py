@@ -32,7 +32,10 @@ def generate_fibo_value():
     """
     API to get the first N numbers in the Fibonacci series
     """
+    # Read the arguments from the frontend
     args = request.args
+
+    # Parse 'num' which is the N value input by the user to integer
     num = int(args.get('num')) if 'num' in args else None
     if num == None:
         return {'data':'No Value Provided'}
@@ -47,23 +50,38 @@ def get_values(num):
     the next numbers in the series and store it in the DB
     """
     with engine.connect() as conn:
+        # Retrieve records from the DB
         query = text(f'SELECT * FROM fibonacci.fibo_values WHERE number_id <= {num} ORDER BY number_id ASC')
         sql_query = conn.execute(query)
+
+        # Conver the results into a dataframe
         df = pd.DataFrame(sql_query, columns=['numberId', 'value'])
         result = [i for i in df['value']]
+
+        # Check if we only have a subset of the series
         if (len(df)-1) != num:
+
+            # Extract last 2 records i.e. N-2 and N-1 numbers from the series
             df2 = df.tail(2)
             last_nums, last_vals = list(df2.loc[:,'numberId']), list(df2.loc[:,'value'])
             fibo_pairs = [[last_nums[0], last_vals[0]], [last_nums[1], last_vals[1]]]
+
+            # Calculate the fibonacci numbers 
             for i in range(last_nums[-1]+1, num+1):
                 next_val = fibo_pairs[-1][1]+fibo_pairs[-2][1]
                 fibo_pairs.append([i, next_val])
                 result.append(next_val)
             fibo_pairs = fibo_pairs[2:]
             df3 = pd.DataFrame(fibo_pairs, columns=df.columns)
+
+            # Store the subset of the series generated in the DB
             insert_values(df3, "fibonacci.fibo_values")    
             df = pd.concat([df,df3], ignore_index=True)
+
+        # Remove the 0th element
         result = result[1:]
+
+        # Return the results
         return {'data': result}
 
 def insert_values(df, table):
