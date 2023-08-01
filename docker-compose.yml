@@ -25,6 +25,18 @@ services:
             - FLASK_ENV=development
         depends_on:
             - db
+    frontend:
+        build: 
+            context: ./frontend
+            dockerfile: Dockerfile
+        ports:
+            - 3000:3000
+        networks:
+            - cz_biohub_network
+        environment:
+            - NODE_ENV=development
+        depends_on:
+            - backend
 
 networks:
     cz_biohub_network:
