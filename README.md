@@ -25,12 +25,12 @@ ex: \$ cd /User/gautham/FiboApp
 Each of the modules frontend, backend, and db consists of a docker file and the corresponding files needed run the module separately as a service on a docker container.
 
 ### Backend
-The backend is a flask app which runs on Python 3.9.13 and a few other dependencies as described in the Pipfile. The backend avoids recomputation of Fibonacci numbers by storig the previous results in the database. The backend can compute Fibonacci numbers upto N=92 as it starts loosing precision due to system memory and PostgreSQL datatype size restrictions<br/>
+The backend is a flask app which runs on Python 3.9.13 and a few other dependencies as described in the Pipfile. The backend avoids recomputation of Fibonacci numbers by storig the previous results in the database. The backend can compute Fibonacci numbers upto <b>N=92</b> as it starts loosing precision due to system memory and PostgreSQL datatype size restrictions<br/>
 
 ### Database
 PostgreSQL 13 is the database used to store the results and consists of 1 table with 2 columns:
-1. number_id (int) - Integer value representing the N
-2. value (bigint) - The Nth value in the Fibonacci Series
+1. Column1 (int) - Integer value representing the N
+2. Column2 (bigint) - The Nth value in the Fibonacci Series
 
 #### Limitation
 The database cannot store Fibonacci values for N>92 as the 93rd Fibonacci value is greater than the max value of bigint in PostgreSQL.
