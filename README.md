@@ -1,5 +1,6 @@
 # FiboApp - Simple Web App that generates Fibonacci Series based on user's input
-NOTE: The fibonacci series generated considers 1 as the 1st Fibonacci number in the series.
+NOTE: The fibonacci series generated considers 1 as the 1st and 0 as the 0th Fibonacci number in the series. <br/>
+Example: N=2 => Series Generated = 1,1
 
 ## Stack
 Backend - Python(Flask) <br/>
